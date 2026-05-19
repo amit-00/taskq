@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>taskq{% block title %}{% endblock %}</title>
+    <meta http-equiv="refresh" content="3">
+    <style>
+        body { font-family: system-ui, sans-serif; max-width: 1200px; margin: 0 auto; padding: 2rem; }
+        h1 { font-size: 1.5rem; }
+        nav a { margin-right: 1rem; }
+    </style>
+</head>
+<body>
+    <h1>taskq</h1>
+    <nav>
+        <a href="/">Overview</a>
+        <a href="/jobs">Jobs</a>
+        <a href="/workers">Workers</a>
+    </nav>
+    <hr>
+    {% block content %}{% endblock %}
+</body>
+</html>

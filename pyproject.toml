@@ -1,0 +1,84 @@
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[project]
+name = "taskq"
+version = "0.1.0"
+description = "A durable, observable task queue for Python with first-class support for AI/agentic workloads"
+readme = "README.md"
+requires-python = ">=3.10"
+license = { text = "MIT" }
+authors = [{ name = "amit-00", email = "amitv052300@gmail.com" }]
+keywords = ["task-queue", "worker", "jobs", "ai", "durable"]
+classifiers = [
+    "Development Status :: 3 - Alpha",
+    "Intended Audience :: Developers",
+    "License :: OSI Approved :: MIT License",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Topic :: Software Development :: Libraries",
+]
+dependencies = ["typer>=0.12"]
+
+[project.optional-dependencies]
+redis     = ["redis>=5.0"]
+dashboard = ["fastapi>=0.110", "jinja2>=3.1", "uvicorn>=0.29"]
+all       = ["taskq[redis,dashboard]"]
+dev       = [
+    "pytest>=8.0",
+    "pytest-asyncio>=0.23",
+    "httpx>=0.27",
+    "ruff>=0.4",
+    "mypy>=1.10",
+]
+
+[project.scripts]
+taskq = "taskq.cli:app"
+
+[project.urls]
+Homepage   = "https://github.com/amit-00/taskq"
+Repository = "https://github.com/amit-00/taskq"
+Issues     = "https://github.com/amit-00/taskq/issues"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/taskq"]
+
+[tool.hatch.envs.default]
+dependencies = [
+    "pytest>=8.0",
+    "pytest-asyncio>=0.23",
+    "httpx>=0.27",
+    "ruff>=0.4",
+    "mypy>=1.10",
+    "fastapi>=0.110",
+    "jinja2>=3.1",
+    "uvicorn>=0.29",
+    "redis>=5.0",
+]
+
+[tool.hatch.envs.default.scripts]
+test      = "pytest {args:tests}"
+lint      = "ruff check src tests"
+typecheck = "mypy src"
+all       = ["lint", "typecheck", "test"]
+
+[tool.ruff]
+line-length    = 100
+src            = ["src", "tests"]
+target-version = "py310"
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "UP", "B", "SIM"]
+
+[tool.mypy]
+python_version         = "3.10"
+strict                 = true
+mypy_path              = "src"
+ignore_missing_imports = true
+
+[tool.pytest.ini_options]
+testpaths    = ["tests"]
+asyncio_mode = "auto"
